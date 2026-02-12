@@ -1,0 +1,27 @@
+/* Override hidden elements that were meant to be animated */
+[data-w-id] {
+  opacity: 1 !important;
+}
+
+[style*="opacity: 0"] {
+  opacity: 1 !important;
+}
+
+/* Marquee animation for logos */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee__inner {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee__inner:hover {
+  animation-play-state: paused;
+}
