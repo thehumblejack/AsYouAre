@@ -1,15 +1,12 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://www.asyouare.club';
-
     return [
         {
-            url: baseUrl,
+            url: 'https://www.asyouare.club',
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'daily',
             priority: 1,
         },
-        // Add other routes here if you add more pages later, e.g. /pricing, /blog
     ];
 }
