@@ -2,6 +2,7 @@
 
 import React from 'react';
 import FAQItem from './components/FAQItem';
+import SEOContent from './components/SEOContent';
 
 export default function Home() {
   return (
@@ -683,6 +684,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <SEOContent />
     </main>
   );
 }

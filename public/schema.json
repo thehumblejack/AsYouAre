@@ -1,0 +1,197 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "@id": "https://www.asyouare.club/#organization",
+            "name": "AsYouAre - Agence Design & Développement Web Tunisie",
+            "url": "https://www.asyouare.club",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.asyouare.club/assets/logo/asyouare_logo.svg",
+                "width": 250,
+                "height": 60
+            },
+            "image": "https://www.asyouare.club/assets/img/preview.png",
+            "description": "Agence leader en Tunisie spécialisée en design site web, développement site web, UX/UI design et solutions digitales sur mesure",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "TN",
+                "addressRegion": "Tunis",
+                "addressLocality": "Tunisia"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "36.8065",
+                "longitude": "10.1815"
+            },
+            "areaServed": [
+                {
+                    "@type": "Country",
+                    "name": "Tunisia"
+                },
+                {
+                    "@type": "City",
+                    "name": "Tunis"
+                },
+                {
+                    "@type": "City",
+                    "name": "Sfax"
+                },
+                {
+                    "@type": "City",
+                    "name": "Sousse"
+                }
+            ],
+            "sameAs": [
+                "https://www.facebook.com/asyouare",
+                "https://www.instagram.com/asyouare",
+                "https://www.linkedin.com/company/asyouare",
+                "https://twitter.com/asyouare_tn"
+            ],
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Service",
+                "availableLanguage": [
+                    "French",
+                    "Arabic",
+                    "English"
+                ]
+            }
+        },
+        {
+            "@type": "WebSite",
+            "@id": "https://www.asyouare.club/#website",
+            "url": "https://www.asyouare.club",
+            "name": "AsYouAre Tunisia - Design & Développement Site Web",
+            "description": "Agence N°1 en Tunisie pour design site web et développement web professionnel",
+            "publisher": {
+                "@id": "https://www.asyouare.club/#organization"
+            },
+            "inLanguage": "fr-TN",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://www.asyouare.club/?s={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        },
+        {
+            "@type": "ProfessionalService",
+            "@id": "https://www.asyouare.club/#service",
+            "name": "AsYouAre - Services Design & Développement Web",
+            "image": "https://www.asyouare.club/assets/img/preview.png",
+            "priceRange": "$$",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "TN",
+                "addressRegion": "Tunis"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "36.8065",
+                "longitude": "10.1815"
+            },
+            "url": "https://www.asyouare.club",
+            "telephone": "+216-XX-XXX-XXX",
+            "servesCuisine": null,
+            "areaServed": {
+                "@type": "Country",
+                "name": "Tunisia"
+            },
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Services Design & Développement Web",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Design Site Web Tunisie",
+                            "description": "Services professionnels de design et conception de sites web modernes et responsives"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Développement Site Web Tunisie",
+                            "description": "Développement web sur mesure avec les dernières technologies"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "UX/UI Design Tunisie",
+                            "description": "Conception d'expérience utilisateur et interfaces modernes"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Design Graphique Tunisie",
+                            "description": "Services de design graphique professionnel pour votre marque"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Création Site Internet Tunisie",
+                            "description": "Création complète de sites internet professionnels"
+                        }
+                    }
+                ]
+            },
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "50",
+                "bestRating": "5",
+                "worstRating": "1"
+            }
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.asyouare.club/#breadcrumb",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Accueil",
+                    "item": "https://www.asyouare.club"
+                }
+            ]
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Pourquoi choisir AsYouAre pour le design de votre site web en Tunisie?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "AsYouAre est l'agence leader en Tunisie pour le design et développement de sites web. Nous offrons des services professionnels de conception web, UX/UI design, et développement sur mesure avec une expertise reconnue à Tunis, Sfax et Sousse."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Quels services de développement web proposez-vous en Tunisie?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Nous proposons des services complets: design site web, développement site web, création site internet, UX/UI design, design graphique, et solutions digitales sur mesure pour entreprises tunisiennes."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Dans quelles villes tunisiennes intervenez-vous?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Nous servons toute la Tunisie, notamment Tunis, Sfax, Sousse, et toutes les autres régions avec nos services de design et développement web professionnel."
+                    }
+                }
+            ]
+        }
+    ]
+}

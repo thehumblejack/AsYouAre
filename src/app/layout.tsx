@@ -4,19 +4,83 @@ import "./globals.css";
 import "./visibility-fix.css";
 
 export const metadata: Metadata = {
-  title: "AsYouAre - Design as a Subscription",
-  description: "The #1 design subscription service for agencies, startups, and entrepreneurs.",
+  title: "AsYouAre - Agence Design & Développement Site Web Tunisie | Meilleure Agence Digitale",
+  description: "🏆 Agence N°1 en Tunisie pour design site web, développement site web, création site internet. Services professionnels de conception graphique, UX/UI design, développement web sur mesure. Tunis, Sfax, Sousse - Devis gratuit.",
+  keywords: [
+    "design site web tunisie",
+    "développement site web tunisie",
+    "agence web tunisie",
+    "création site internet tunisie",
+    "agence design tunisie",
+    "développement web tunisie",
+    "conception site web tunis",
+    "agence digitale tunisie",
+    "design graphique tunisie",
+    "UX UI design tunisie",
+    "site web professionnel tunisie",
+    "agence web tunis",
+    "développement site web tunis",
+    "design site web tunis",
+    "création site web tunisie",
+    "meilleure agence web tunisie",
+    "agence développement web tunisie",
+    "design web tunisie",
+    "site internet tunisie",
+    "agence création site web tunisie"
+  ],
+  authors: [{ name: "AsYouAre Design Agency Tunisia" }],
+  creator: "AsYouAre - Agence Design & Développement Web Tunisie",
+  publisher: "AsYouAre Tunisia",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://www.asyouare.club'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'fr-TN': '/',
+      'ar-TN': '/',
+      'en': '/',
+    },
+  },
   openGraph: {
-    title: "Asyouare - Unlimited Design & Revisions",
-    description: "The #1 unlimited product design subscription service for agencies, startups, and entrepreneurs.",
-    images: ["/assets/img/preview.png"],
-    type: "website",
+    title: "AsYouAre - Meilleure Agence Design & Développement Site Web en Tunisie",
+    description: "🎨 Agence leader en Tunisie spécialisée en design site web, développement site web, UX/UI design. Solutions digitales sur mesure pour entreprises tunisiennes. Tunis, Sfax, Sousse.",
+    url: 'https://www.asyouare.club',
+    siteName: 'AsYouAre Tunisia - Design & Développement Web',
+    images: [
+      {
+        url: '/assets/img/preview.png',
+        width: 1200,
+        height: 630,
+        alt: 'AsYouAre - Agence Design & Développement Site Web Tunisie',
+      }
+    ],
+    locale: 'fr_TN',
+    type: 'website',
   },
   twitter: {
     card: "summary_large_image",
-    title: "Asyouare - Unlimited Design & Revisions",
-    description: "The #1 unlimited product design subscription service for agencies, startups, and entrepreneurs.",
+    title: "AsYouAre - Design & Développement Site Web Tunisie",
+    description: "🏆 Agence N°1 en Tunisie pour design site web et développement web professionnel. Services digitaux premium.",
     images: ["/assets/img/preview.png"],
+    creator: "@asyouare_tn",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
   },
 };
 
@@ -26,8 +90,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="geo.region" content="TN" />
+        <meta name="geo.placename" content="Tunisia" />
+        <meta name="geo.position" content="36.8065;10.1815" />
+        <meta name="ICBM" content="36.8065, 10.1815" />
+        {/* Google Search Console Verification */}
+        <meta name="google-site-verification" content="sYv6xZJ29TAW2D8tABVTCDl5MmYUXBl--dPfvbJDw7E" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="shortcut icon" href="/assets/img/thumbnail.png" type="image/x-icon" />
@@ -43,6 +115,72 @@ export default function RootLayout({
             overflow-x: hidden;
           }
         `}} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://www.asyouare.club/#organization",
+                  "name": "AsYouAre - Agence Design & Développement Web Tunisie",
+                  "url": "https://www.asyouare.club",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://www.asyouare.club/assets/logo/asyouare_logo.svg"
+                  },
+                  "description": "Agence leader en Tunisie spécialisée en design site web, développement site web, UX/UI design",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "TN",
+                    "addressRegion": "Tunis"
+                  },
+                  "areaServed": [
+                    { "@type": "Country", "name": "Tunisia" },
+                    { "@type": "City", "name": "Tunis" },
+                    { "@type": "City", "name": "Sfax" },
+                    { "@type": "City", "name": "Sousse" }
+                  ]
+                },
+                {
+                  "@type": "ProfessionalService",
+                  "name": "AsYouAre - Services Design & Développement Web",
+                  "priceRange": "$$",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "TN"
+                  },
+                  "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Services Design & Développement Web",
+                    "itemListElement": [
+                      {
+                        "@type": "Offer",
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Design Site Web Tunisie"
+                        }
+                      },
+                      {
+                        "@type": "Offer",
+                        "itemOffered": {
+                          "@type": "Service",
+                          "name": "Développement Site Web Tunisie"
+                        }
+                      }
+                    ]
+                  },
+                  "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "5",
+                    "reviewCount": "50"
+                  }
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body className="body">
         {children}
