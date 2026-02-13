@@ -69,71 +69,7 @@ export default function SEOContent() {
                 </address>
             </div>
 
-            {/* Visible SEO-friendly footer content */}
-            <section className="seo-footer-section" style={{
-                background: '#f8f9fa',
-                padding: '60px 20px',
-                marginTop: '80px',
-                borderTop: '1px solid #e9ecef'
-            }}>
-                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '40px',
-                        marginBottom: '40px'
-                    }}>
-                        <div>
-                            <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '20px', color: '#1a1a1a' }}>
-                                🏆 Agence Design Site Web Tunisie
-                            </h3>
-                            <p style={{ fontSize: '14px', lineHeight: '1.8', color: '#666' }}>
-                                AsYouAre est l'agence leader en Tunisie pour le design site web, développement site web,
-                                et création site internet. Services professionnels à Tunis, Sfax, Sousse.
-                            </p>
-                        </div>
 
-                        <div>
-                            <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '15px', color: '#1a1a1a' }}>
-                                Nos Services
-                            </h4>
-                            <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2', color: '#666' }}>
-                                <li>✓ Design Site Web Tunisie</li>
-                                <li>✓ Développement Site Web</li>
-                                <li>✓ Création Site Internet</li>
-                                <li>✓ UX/UI Design</li>
-                                <li>✓ Design Graphique</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '15px', color: '#1a1a1a' }}>
-                                Zones d'Intervention
-                            </h4>
-                            <ul style={{ listStyle: 'none', padding: 0, fontSize: '14px', lineHeight: '2', color: '#666' }}>
-                                <li>📍 Tunis - Design & Développement Web</li>
-                                <li>📍 Sfax - Agence Web</li>
-                                <li>📍 Sousse - Création Sites</li>
-                                <li>📍 Toute la Tunisie</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div style={{
-                        textAlign: 'center',
-                        paddingTop: '30px',
-                        borderTop: '1px solid #dee2e6',
-                        fontSize: '13px',
-                        color: '#888'
-                    }}>
-                        <p>
-                            <strong>AsYouAre</strong> - Meilleure Agence Design & Développement Site Web en Tunisie |
-                            Design Site Web Tunis | Développement Web Sfax | Création Site Internet Sousse |
-                            Agence Digitale Tunisie | UX/UI Design Professionnel
-                        </p>
-                    </div>
-                </div>
-            </section>
         </>
     );
 }
