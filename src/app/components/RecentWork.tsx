@@ -10,7 +10,7 @@ export default function RecentWork() {
                     <p className="sub-para-24">Award winning designs, and nothing less.</p>
                     <div className="button__group recent-work">
                         <Link
-                            href="https://www.figma.com/proto/noms4VJJeWILgxRQA0EWQp/Senior.-UI%2FUX-Designer-%E2%80%A2-Design-Mentor---Hamza-HAJ-TAIEB?type=design&node-id=701-44229&t=RyRhkI0JrKtS3Bbb-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=701%3A44229"
+                            href="https://www.figma.com/proto/noms4VJJeWILgxRQA0EWQp/Senior.-Product--Design-Engineer---Hamza-HAJ-TAIEB?page-id=1294%3A39016&node-id=1294-39018&p=f&t=rLuSAMZt83bygbda-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1294%3A39018&hide-ui=1"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="button hero w-inline-block">

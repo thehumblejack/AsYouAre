@@ -14,7 +14,7 @@ export default function Home() {
             src="/assets/logo/asyouare_logo.svg" loading="lazy" alt="" /></a></div>
           <div>
             <nav role="navigation" className="nav-menu w-nav-menu"><a
-              href="https://www.figma.com/proto/noms4VJJeWILgxRQA0EWQp/Senior.-UI%2FUX-Designer-%E2%80%A2-Design-Mentor---Hamza-HAJ-TAIEB?type=design&node-id=701-44229&t=RyRhkI0JrKtS3Bbb-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=701%3A44229"
+              href="https://www.figma.com/proto/noms4VJJeWILgxRQA0EWQp/Senior.-Product--Design-Engineer---Hamza-HAJ-TAIEB?page-id=1294%3A39016&node-id=1294-39018&p=f&t=rLuSAMZt83bygbda-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1294%3A39018&hide-ui=1"
               target="_blank" className="nav__link w-nav-link">Latest projects</a><a href="#pricing-3"
                 className="nav__link w-nav-link">Pricing</a><a target="_blank" className="nav__link w-nav-link">FAQs</a>
             </nav>
@@ -346,7 +346,7 @@ export default function Home() {
             <h2>Recent work</h2>
             <p className="sub-para-24">Award winning designs, and nothing less.</p>
             <div className="button__group recent-work"><a
-              href="https://www.figma.com/proto/noms4VJJeWILgxRQA0EWQp/Senior.-UI%2FUX-Designer-%E2%80%A2-Design-Mentor---Hamza-HAJ-TAIEB?type=design&node-id=701-44229&t=RyRhkI0JrKtS3Bbb-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=701%3A44229"
+              href="https://www.figma.com/proto/noms4VJJeWILgxRQA0EWQp/Senior.-Product--Design-Engineer---Hamza-HAJ-TAIEB?page-id=1294%3A39016&node-id=1294-39018&p=f&t=rLuSAMZt83bygbda-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1294%3A39018&hide-ui=1"
               target="_blank" className="button hero w-inline-block">
               <div>View recent work</div>
             </a></div>
