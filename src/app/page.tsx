@@ -50,11 +50,12 @@ export default function Home() {
         <div className="container"><img
           src="https://assets.website-files.com/5837424ae11409586f837994/61250d3dea79031fe9f7246a_Frame.svg"
           loading="lazy" data-w-id="1489d49a-5dfd-3922-f901-235965df4479" alt="" className="image-71" /></div>
-        <div data-w-id="abadc605-7bb3-54f7-bfc2-eda587363b26" style={{ opacity: 0 }} className="hero-images-slider"><img
-          src="https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam.jpg" loading="lazy"
-          sizes="400px"
-          srcSet="https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam.jpg 1000w"
-          alt="" className="image-68" /><img
+        <div data-w-id="abadc605-7bb3-54f7-bfc2-eda587363b26" className="hero-images-slider">
+          <img
+            src="https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam.jpg" loading="lazy"
+            sizes="400px"
+            srcSet="https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam.jpg 1000w"
+            alt="" className="image-68" /><img
             src="https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam.jpg" loading="lazy"
             sizes="400px"
             srcSet="https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam.jpg 1000w"
@@ -70,7 +71,29 @@ export default function Home() {
             src="https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam-4.jpg"
             loading="lazy" sizes="400px"
             srcSet="https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam-4-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam-4-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam-4.jpg 1000w"
-            alt="" className="image-68" /></div>
+            alt="" className="image-68" />
+          <img
+            src="https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam.jpg" loading="lazy"
+            sizes="400px"
+            srcSet="https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/6297f8641bf65f0e3b836ada_Kam.jpg 1000w"
+            alt="" className="image-68" /><img
+            src="https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam.jpg" loading="lazy"
+            sizes="400px"
+            srcSet="https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/6297f75e7e5a7c30fd40bd17_Kam.jpg 1000w"
+            alt="" className="image-68" /><img
+            src="https://assets.website-files.com/5837424ae11409586f837994/6297f8d36f3e6226d4056674_Kam.jpg" loading="lazy"
+            sizes="400px"
+            srcSet="https://assets.website-files.com/5837424ae11409586f837994/6297f8d36f3e6226d4056674_Kam-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/6297f8d36f3e6226d4056674_Kam-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/6297f8d36f3e6226d4056674_Kam.jpg 1000w"
+            alt="" className="image-68" /><img
+            src="https://assets.website-files.com/5837424ae11409586f837994/61251d9bf5146e048343e5cf_Kam-3.jpg"
+            loading="lazy" sizes="400px"
+            srcSet="https://assets.website-files.com/5837424ae11409586f837994/61251d9bf5146e048343e5cf_Kam-3-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/61251d9bf5146e048343e5cf_Kam-3-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/61251d9bf5146e048343e5cf_Kam-3.jpg 1000w"
+            alt="" className="image-68" /><img
+            src="https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam-4.jpg"
+            loading="lazy" sizes="400px"
+            srcSet="https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam-4-p-500.jpeg 500w, https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam-4-p-800.jpeg 800w, https://assets.website-files.com/5837424ae11409586f837994/61251da595067590415ca231_Kam.jpg 1000w"
+            alt="" className="image-68" />
+        </div>
         <div className="container logo">
           <div className="logos hero hidden"><img
             src="https://assets.website-files.com/5837424ae11409586f837994/61424b89af08bc0dda064aad_Frame%2051.svg"
