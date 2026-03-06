@@ -695,7 +695,7 @@ export default function Home() {
               <div className="div-block-3"><img
                 src="https://assets.website-files.com/5837424ae11409586f837994/611d718c63e40202e8a17cd3_Frame.svg"
                 loading="lazy" alt="" className="az" />
-                <div className="footer__head">Made with love,<br /> Hamza HAJ TAIEB</div>
+                {/* <div className="footer__head">Made with love,<br /> Hamza HAJ TAIEB</div> */}
               </div>
             </div>
             <div className="footer__right-col">
