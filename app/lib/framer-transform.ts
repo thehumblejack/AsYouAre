@@ -22,8 +22,39 @@ import { load } from "cheerio";
  */
 export function transformFramerHtml(html: string): string {
   const $ = load(html);
+  rebrand($);
   $("body").append(WIDGET);
   return $.html();
+}
+
+/**
+ * Rename the template brand "Aeline" -> "AsYouAre" in static content: visible
+ * text nodes (skipping <script>/<style>), the <title>, and meta tag content
+ * (description / Open Graph / Twitter). The client-side observer in WIDGET
+ * re-applies this after Framer's runtime re-renders text on hydration.
+ */
+function rebrand($: ReturnType<typeof load>): void {
+  const FROM = /Aeline/g;
+  const TO = "AsYouAre";
+
+  $("*")
+    .contents()
+    .each((_, node) => {
+      const n = node as unknown as {
+        type: string;
+        data?: string;
+        parent?: { name?: string } | null;
+      };
+      if (n.type !== "text" || !n.data || !n.data.includes("Aeline")) return;
+      const parentName = n.parent?.name;
+      if (parentName === "script" || parentName === "style") return;
+      n.data = n.data.replace(FROM, TO);
+    });
+
+  $("meta[content]").each((_, el) => {
+    const c = $(el).attr("content");
+    if (c && c.includes("Aeline")) $(el).attr("content", c.replace(FROM, TO));
+  });
 }
 
 const WIDGET = /* html */ `
@@ -128,6 +159,57 @@ const WIDGET = /* html */ `
     video.addEventListener("pause", function () { w.setAttribute("data-playing", "false"); });
     video.addEventListener("ended", function () { w.setAttribute("data-playing", "false"); });
   }
+})();
+</script>
+
+<script>
+/* Rename "Aeline" -> "AsYouAre" in the live DOM and keep it renamed even after
+   Framer's runtime re-renders text on hydration. */
+(function () {
+  var FROM = /Aeline/g, MATCH = "Aeline";
+  function isCode(el) {
+    return !!el && (el.nodeName === "SCRIPT" || el.nodeName === "STYLE" || el.nodeName === "NOSCRIPT");
+  }
+  function fixTitle() {
+    if (document.title.indexOf(MATCH) >= 0) document.title = document.title.replace(FROM, "AsYouAre");
+  }
+  function fixSubtree(root) {
+    if (!root) return;
+    if (root.nodeType === 3) {
+      if (!isCode(root.parentNode) && root.nodeValue && root.nodeValue.indexOf(MATCH) >= 0)
+        root.nodeValue = root.nodeValue.replace(FROM, "AsYouAre");
+      return;
+    }
+    if (root.nodeType !== 1 || isCode(root)) return;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (isCode(n.parentNode)) return NodeFilter.FILTER_REJECT;
+        return n.nodeValue && n.nodeValue.indexOf(MATCH) >= 0
+          ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+      }
+    });
+    var nodes = [], n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(function (t) { t.nodeValue = t.nodeValue.replace(FROM, "AsYouAre"); });
+  }
+  function fixAll() { fixSubtree(document.body); fixTitle(); }
+
+  fixAll();
+  var mo = new MutationObserver(function (muts) {
+    for (var i = 0; i < muts.length; i++) {
+      var m = muts[i];
+      if (m.type === "characterData") {
+        var t = m.target;
+        if (!isCode(t.parentNode) && t.nodeValue && t.nodeValue.indexOf(MATCH) >= 0)
+          t.nodeValue = t.nodeValue.replace(FROM, "AsYouAre");
+      } else {
+        for (var j = 0; j < m.addedNodes.length; j++) fixSubtree(m.addedNodes[j]);
+      }
+    }
+    fixTitle();
+  });
+  if (document.body) mo.observe(document.body, { subtree: true, childList: true, characterData: true });
+  window.addEventListener("load", fixAll);
 })();
 </script>
 `;
