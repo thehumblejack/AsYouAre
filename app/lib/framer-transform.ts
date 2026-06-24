@@ -37,7 +37,7 @@ const WIDGET = /* html */ `
     position: fixed;
     right: 20px;
     bottom: 20px;
-    width: 200px;
+    width: 230px;
     z-index: 2147483600;
   }
 
@@ -45,7 +45,7 @@ const WIDGET = /* html */ `
   #ayv-widget .ayv-card {
     position: relative;
     width: 100%;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 4 / 5;
     border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
@@ -88,7 +88,7 @@ const WIDGET = /* html */ `
   #ayv-widget .ayv-play svg { width: 18px; height: 18px; margin-left: 2px; }
 
   @media (max-width: 480px) {
-    #ayv-widget { right: 12px; bottom: 12px; width: min(46vw, 200px); }
+    #ayv-widget { right: 12px; bottom: 12px; width: min(52vw, 230px); }
   }
 </style>
 
