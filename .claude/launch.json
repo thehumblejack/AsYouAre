@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "asyouare",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["dev", "-p", "3002"],
+      "port": 3002
+    }
+  ]
+}
