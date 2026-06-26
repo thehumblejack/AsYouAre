@@ -168,8 +168,25 @@ export function transformFramerHtml(html: string): string {
   $("body").append(WIDGET);
   $("body").append(rebrandScript());
   $("body").append(navInjectScript());
+  $("body").append(NAV_HOVER_STYLE);
   return $.html();
 }
+
+/**
+ * The injected "Portfolio" nav item is a static clone, so it doesn't get Framer's
+ * JS-driven hover swap. The nav uses a two-copy "Menu Text" stack inside an
+ * overflow-hidden wrap; reproduce the same hover slide with pure CSS (scoped to
+ * the injected link so it never conflicts with Framer's own handlers).
+ */
+const NAV_HOVER_STYLE = /* html */ `
+<style>
+  a[data-ayv-portfolio] [data-framer-name="Menu Text"] {
+    transition: transform .42s cubic-bezier(.44, 0, .16, 1);
+  }
+  a[data-ayv-portfolio]:hover [data-framer-name="Menu Text"] {
+    transform: translateY(-100%) !important;
+  }
+</style>`;
 
 /**
  * Client-side script that adds a "Portfolio" link to the Framer nav.
