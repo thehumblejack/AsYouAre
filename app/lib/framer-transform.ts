@@ -167,7 +167,73 @@ export function transformFramerHtml(html: string): string {
 
   $("body").append(WIDGET);
   $("body").append(rebrandScript());
+  $("body").append(navInjectScript());
   return $.html();
+}
+
+/**
+ * Client-side script that adds a "Portfolio" link to the Framer nav.
+ *
+ * The nav is generated and hydrated by Framer's runtime, so we can't add the
+ * item in static HTML reliably — Framer would reconcile it away. Instead we
+ * clone an existing menu item (the "Blog" link) after render, relabel it, and
+ * re-add it whenever Framer re-renders the nav (same approach as the rebrand
+ * observer above). The clone keeps Framer's classes (so it's styled
+ * identically) and uses a plain href to /portfolio, which our route serves.
+ */
+function navInjectScript(): string {
+  return `
+<script>
+(function () {
+  // Normalize an href to its page slug: "./blog" / "blog.html" -> "blog".
+  function slug(h) {
+    return (h || "").replace(/^\\.?\\//, "").replace(/\\.html$/, "").replace(/\\/$/, "");
+  }
+  function addPortfolioLinks() {
+    var anchors = Array.prototype.slice.call(document.querySelectorAll("a"));
+    var blogAnchors = anchors.filter(function (a) { return slug(a.getAttribute("href")) === "blog"; });
+    blogAnchors.forEach(function (blog) {
+      var item = blog.closest('[class*="-container"]');
+      if (!item || !item.parentElement) return;            // not the Framer nav (e.g. footer/our page)
+      var row = item.parentElement;
+      // Skip if this menu already has a Portfolio entry.
+      if (row.querySelector('[data-ayv-portfolio]')) return;
+      var already = Array.prototype.slice.call(row.querySelectorAll("a")).some(function (a) {
+        return slug(a.getAttribute("href")) === "portfolio";
+      });
+      if (already) return;
+      var clone = item.cloneNode(true);
+      var a = clone.querySelector("a");
+      if (!a) return;
+      a.setAttribute("href", "/portfolio");
+      a.setAttribute("data-ayv-portfolio", "1");
+      a.removeAttribute("data-framer-page-link-current");
+      // Relabel the (possibly duplicated) text nodes: Blog -> Portfolio.
+      var w = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT, null), n;
+      while ((n = w.nextNode())) {
+        if (/Blog/i.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/Blog/gi, "Portfolio");
+      }
+      item.parentNode.insertBefore(clone, item.nextSibling); // place right after Blog
+    });
+  }
+
+  var scheduled = false;
+  function schedule() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(function () { scheduled = false; addPortfolioLinks(); });
+  }
+
+  addPortfolioLinks();
+  // Retry through Framer's hydration window.
+  [100, 400, 900, 1800].forEach(function (t) { setTimeout(addPortfolioLinks, t); });
+  if (document.body) {
+    new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+  }
+  window.addEventListener("load", addPortfolioLinks);
+})();
+</script>
+`;
 }
 
 /** Client-side script that re-applies rebrand + COPY after Framer re-renders. */
