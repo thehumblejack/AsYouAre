@@ -2,6 +2,15 @@
 // (the /portfolio grid) and build-casestudies.mjs (the /work/<slug> pages).
 // Media `id` is a Contra Cloudinary id; `type` is "vid" (cover is a video → still
 // frame) or "img". coverUrl() builds the URL at a given width.
+//
+// To fill a case study's image slots, add an `images` array to a project. Slots
+// fill in order: [0]=feature (16:9), [1..2]=two-up, [3..6]=gallery, [7]=closing.
+// Drop files into public/media/ and reference them, e.g.:
+//   images: [
+//     { src: "/media/myedspace-1.jpg", caption: "Dashboard" },
+//     { src: "/media/myedspace-2.jpg" },
+//   ]
+// Empty/missing slots render as tasteful "Add image" placeholders.
 
 export const CONTRA = "https://contra.com/humblejack/work?r=humblejack";
 

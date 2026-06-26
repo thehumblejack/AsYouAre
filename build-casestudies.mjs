@@ -10,6 +10,15 @@ const RAW = readFileSync("content/contact.html", "utf8");
 const PJS = `"Plus Jakarta Sans","Plus Jakarta Sans Placeholder",-apple-system,sans-serif`;
 const MONO = `"Geist Mono","Geist Mono Placeholder",monospace`;
 
+// Platform per project (reasonable defaults — edit freely).
+const PLATFORM = {
+  myedspace: "Web app", bookini: "Web app", figjoy: "Web · Figma plugin",
+  warena: "Web app", "pycon-us-2025": "Website", kaedim: "Web app",
+  fanbasis: "Web app", tableflow: "Web app", "magic-moment": "Web app",
+  terra: "Web · API", simular: "Desktop app",
+};
+const ROLE_CHIPS = ["Product strategy", "UX & user flows", "UI design", "Design system", "Prototyping", "Frontend engineering"];
+
 // Top-level nav targets (contact.html uses relative .html hrefs).
 const HREF_MAP = {
   "index.html": "/", "./": "/",
@@ -46,26 +55,63 @@ function caseCss() {
   .cs-cover { border-radius:18px; overflow:hidden; background:#0b0b10; box-shadow:0 30px 80px rgba(20,30,60,.18); }
   .cs-cover img { width:100%; height:auto; display:block; }
 
-  .cs-body { padding:64px 0 20px; }
-  .cs-meta { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; padding:0 0 40px; margin-bottom:40px; border-bottom:1px solid rgba(19,19,19,.08); }
-  .cs-meta .k { display:block; font-family:${MONO}; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:rgba(19,19,19,.45); margin-bottom:6px; }
+  /* Hero meta row */
+  .cs-meta { display:flex; flex-wrap:wrap; gap:34px; margin-top:32px; padding-top:26px; border-top:1px solid rgba(19,19,19,.1); }
+  .cs-meta .k { display:block; font-family:${MONO}; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:rgba(19,19,19,.42); margin-bottom:7px; }
   .cs-meta .v { font-family:${PJS}; font-size:16px; font-weight:500; letter-spacing:-.01em; color:var(--ink); }
-  .cs-h2 { font-family:${PJS}; font-size:26px; line-height:1.2; font-weight:600; letter-spacing:-.03em; color:var(--ink); margin:38px 0 14px; }
-  .cs-p { font-family:${PJS}; font-size:17px; line-height:1.7; font-weight:400; letter-spacing:-.01em; color:rgba(19,19,19,.7); margin:0 0 16px; }
-  .cs-note { font-family:${PJS}; font-size:14px; color:rgba(19,19,19,.45); margin-top:8px; font-style:italic; }
+
+  /* Document sections */
+  .cs-col { max-width:820px; }
+  .cs-section { padding:54px 0; border-top:1px solid rgba(19,19,19,.08); }
+  .cs-section.first { border-top:0; padding-top:64px; }
+  .cs-label { font-family:${MONO}; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(19,19,19,.4); margin:0 0 16px; }
+  .cs-h2 { font-family:${PJS}; font-size:clamp(26px,3.4vw,34px); line-height:1.15; font-weight:600; letter-spacing:-.035em; color:var(--ink); margin:0 0 18px; }
+  .cs-p { font-family:${PJS}; font-size:17.5px; line-height:1.72; font-weight:400; letter-spacing:-.01em; color:rgba(19,19,19,.68); margin:0 0 16px; }
+  .cs-note { font-family:${PJS}; font-size:14px; line-height:1.6; color:rgba(19,19,19,.42); margin-top:14px; font-style:italic; }
+  .cs-roles { display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .cs-role { font-family:${PJS}; font-size:14px; font-weight:500; color:rgba(19,19,19,.72); background:rgba(19,19,19,.05); padding:8px 15px; border-radius:48px; }
+
+  /* Process timeline */
+  .cs-process { margin-top:6px; }
+  .cs-step { display:grid; grid-template-columns:84px 1fr; gap:24px; padding:26px 0; border-top:1px solid rgba(19,19,19,.08); }
+  .cs-step:first-child { border-top:0; padding-top:8px; }
+  .cs-step .num { font-family:${MONO}; font-size:14px; letter-spacing:.06em; color:var(--ink); padding-top:5px; }
+  .cs-step h3 { font-family:${PJS}; font-size:21px; font-weight:600; letter-spacing:-.025em; color:var(--ink); margin:0 0 7px; }
+  .cs-step p { font-family:${PJS}; font-size:16.5px; line-height:1.64; color:rgba(19,19,19,.64); margin:0; }
+
+  /* Figures / image slots */
+  .cs-media { padding:20px 0; }
+  .cs-fig { margin:0; }
+  .cs-fig > img { width:100%; height:auto; display:block; border-radius:16px; box-shadow:0 20px 50px rgba(20,30,60,.10); }
+  .cs-fig figcaption { font-family:${MONO}; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:rgba(19,19,19,.4); margin-top:13px; }
+  .cs-ph { width:100%; display:flex; align-items:center; justify-content:center; border-radius:16px;
+    background:linear-gradient(180deg, rgba(19,19,19,.04), rgba(19,19,19,.015)); border:1px dashed rgba(19,19,19,.16); }
+  .cs-ph span { font-family:${MONO}; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(19,19,19,.32); }
+  .cs-figrow { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .cs-gallery { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:8px; }
+  @media (max-width:760px){ .cs-figrow, .cs-gallery { grid-template-columns:1fr; } }
 
   .cs-next { padding:30px 0 110px; }
   .cs-next .row { display:flex; align-items:center; justify-content:space-between; gap:24px; padding-top:34px; border-top:1px solid rgba(19,19,19,.08); flex-wrap:wrap; }
   .cs-allwork { display:inline-flex; align-items:center; gap:8px; font-family:${PJS}; font-size:15px; font-weight:600; color:var(--ink); text-decoration:none; }
-  .cs-nextlink { display:flex; flex-direction:column; align-items:flex-end; text-decoration:none; }
+  .cs-nextlink { position:relative; display:flex; flex-direction:column; align-items:flex-end; text-decoration:none; }
   .cs-nextlink .lbl { font-family:${MONO}; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:rgba(19,19,19,.45); }
   .cs-nextlink .nm { font-family:${PJS}; font-size:20px; font-weight:600; letter-spacing:-.02em; color:var(--ink); margin-top:3px; }
   .cs-nextlink:hover .nm { color:rgba(19,19,19,.6); }
+  /* Hover preview of the next project's cover */
+  .cs-preview { position:absolute; right:0; bottom:calc(100% + 18px); z-index:5; width:300px; aspect-ratio:16/10;
+    border-radius:14px; overflow:hidden; background:#0b0b10; box-shadow:0 30px 60px rgba(20,30,60,.30);
+    opacity:0; transform:translateY(14px) scale(.96); transform-origin:bottom right; pointer-events:none;
+    transition:opacity .3s ease, transform .3s ease; }
+  .cs-preview img { width:100%; height:100%; object-fit:cover; display:block; }
+  .cs-nextlink:hover .cs-preview { opacity:1; transform:translateY(0) scale(1); }
+  @media (max-width:760px){ .cs-preview { display:none; } }
 
   @media (max-width:640px){
     .cs-wrap { padding:0 22px; }
     .cs-hero { padding-top:120px; }
-    .cs-meta { grid-template-columns:1fr 1fr; gap:18px; }
+    .cs-meta { gap:22px; }
+    .cs-step { grid-template-columns:1fr; gap:6px; }
     .cs-next .row { flex-direction:column; align-items:flex-start; }
     .cs-nextlink { align-items:flex-start; }
   }
@@ -108,55 +154,114 @@ function mobileMenu() {
 </script>`;
 }
 
+// Renders an image, or a tasteful placeholder slot when none is provided yet.
+// `img` is { src, caption?, alt? } from a project's optional `images` array.
+function fig(img, ratio, hint) {
+  if (img && img.src) {
+    return `<figure class="cs-fig"><img src="${img.src}" alt="${img.alt || ""}" loading="lazy" />` +
+      `${img.caption ? `<figcaption>${img.caption}</figcaption>` : ""}</figure>`;
+  }
+  return `<figure class="cs-fig"><div class="cs-ph" style="aspect-ratio:${ratio}"><span>${hint || "Add image"}</span></div></figure>`;
+}
+
 function caseMain(p, next) {
   const cover = coverUrl(p.media, 1600);
+  const nextCover = coverUrl(next.media, 700);
+  const im = p.images || [];
+  const platform = PLATFORM[p.slug] || "Web app";
+  const subLower = p.sub.charAt(0).toLowerCase() + p.sub.slice(1);
+
+  const challenge = `${p.title} is ${subLower}. The brief was to take something genuinely complex and make it feel effortless — an experience that's clear to use, cohesive across every surface, and solid enough for the team to keep building on.`;
+  const roleText = `I led ${p.title} end to end as a product designer and design engineer — owning the experience from research and strategy all the way through to the shipped, production-grade build.`;
+  const outcome = `${p.title} came together as a polished, production-grade ${platform.toLowerCase()} — designed and engineered as one seamless whole, ready to grow with the team.`;
+
+  const steps = [
+    ["Discover", `I started with the problem and the people ${p.title} is for — auditing the current experience, aligning with stakeholders on goals, and mapping the core jobs the product had to do well.`],
+    ["Define", `From there I shaped the structure: information architecture, the key user flows, and a focused scope for v1 — so there was a clear, prioritized path to build against.`],
+    ["Design", `I designed the experience end to end, from low-fidelity flows to polished UI, and built a reusable design system that kept ${p.title} consistent and quick to extend. Prototypes made the interactions tangible before any code.`],
+    ["Build", `As a design engineer I worked hand in hand with engineering — and built parts of the frontend myself — turning the designs into a responsive, production-grade interface with every detail intact.`],
+    ["Ship & iterate", `We shipped, watched how people actually used it, and iterated — tightening flows, smoothing edge cases, and hardening the foundations for whatever came next.`],
+  ];
+  const stepHtml = steps.map(([h, t], i) =>
+    `<div class="cs-step"><div class="num">0${i + 1}</div><div><h3>${h}</h3><p>${t}</p></div></div>`
+  ).join("");
+  const chips = ROLE_CHIPS.map((c) => `<span class="cs-role">${c}</span>`).join("");
+
   return `
   <main class="cs-main" data-framer-name="main">
-    <section class="cs-hero">
-      <div class="cs-wrap">
-        <a class="cs-back" href="/portfolio">${ARROW_LEFT} All work</a>
-        <p class="cs-eyebrow"><span class="dot"></span>Case study</p>
-        <h1 class="cs-title">${p.title}</h1>
-        <p class="cs-sub">${p.sub}</p>
-        <a class="cs-cta" href="${CONTRA}" target="_blank" rel="noopener">View project ${ARROW_UP}</a>
+    <section class="cs-hero"><div class="cs-wrap">
+      <a class="cs-back" href="/portfolio">${ARROW_LEFT} All work</a>
+      <p class="cs-eyebrow"><span class="dot"></span>Case study</p>
+      <h1 class="cs-title">${p.title}</h1>
+      <p class="cs-sub">${p.sub}</p>
+      <a class="cs-cta" href="${CONTRA}" target="_blank" rel="noopener">View project ${ARROW_UP}</a>
+      <div class="cs-meta">
+        <div><span class="k">Role</span><span class="v">Design &amp; Engineering</span></div>
+        <div><span class="k">Discipline</span><span class="v">${p.tag}</span></div>
+        <div><span class="k">Platform</span><span class="v">${platform}</span></div>
+        <div><span class="k">Year</span><span class="v">2024</span></div>
       </div>
-    </section>
+    </div></section>
 
-    <section class="cs-cover-wrap">
-      <div class="cs-wrap"><div class="cs-cover"><img src="${cover}" alt="${p.title}" /></div></div>
-    </section>
+    <section class="cs-cover-wrap"><div class="cs-wrap"><div class="cs-cover"><img src="${cover}" alt="${p.title}" /></div></div></section>
 
-    <section class="cs-body">
-      <div class="cs-wrap cs-narrow">
-        <div class="cs-meta">
-          <div><span class="k">Role</span><span class="v">Product Design · Engineering</span></div>
-          <div><span class="k">Discipline</span><span class="v">${p.tag}</span></div>
-          <div><span class="k">Year</span><span class="v">2024</span></div>
-        </div>
+    <section class="cs-section first"><div class="cs-wrap"><div class="cs-col">
+      <p class="cs-label">Context</p>
+      <h2 class="cs-h2">The challenge</h2>
+      <p class="cs-p">${challenge}</p>
+    </div></div></section>
 
-        <h2 class="cs-h2">Overview</h2>
-        <p class="cs-p">${p.title} — ${p.sub.toLowerCase()}. I led the design end to end, shaping the product from early concepts and flows through to a polished, production-ready interface.</p>
-        <p class="cs-note">Placeholder copy — replace with the real case study story for ${p.title}.</p>
+    <section class="cs-media"><div class="cs-wrap">
+      ${fig(im[0], "16/9", "Feature image · wide (16:9)")}
+    </div></section>
 
-        <h2 class="cs-h2">What I did</h2>
-        <p class="cs-p">Research and product strategy, information architecture, UX flows, a complete UI design system, and close collaboration with engineering to ship. Add the specifics, decisions, and outcomes here.</p>
+    <section class="cs-section"><div class="cs-wrap"><div class="cs-col">
+      <p class="cs-label">Role</p>
+      <h2 class="cs-h2">What I owned</h2>
+      <p class="cs-p">${roleText}</p>
+      <div class="cs-roles">${chips}</div>
+    </div></div></section>
 
-        <h2 class="cs-h2">Outcome</h2>
-        <p class="cs-p">Summarize the impact — metrics, launch, feedback. You can also drop in more screens, before/after shots, or a prototype embed in this section.</p>
+    <section class="cs-media"><div class="cs-wrap"><div class="cs-figrow">
+      ${fig(im[1], "4/3", "Screen")}
+      ${fig(im[2], "4/3", "Screen")}
+    </div></div></section>
+
+    <section class="cs-section"><div class="cs-wrap"><div class="cs-col">
+      <p class="cs-label">Process</p>
+      <h2 class="cs-h2">From first sketch to shipped</h2>
+      <div class="cs-process">${stepHtml}</div>
+    </div></div></section>
+
+    <section class="cs-section"><div class="cs-wrap">
+      <div class="cs-col"><p class="cs-label">Highlights</p><h2 class="cs-h2">A closer look</h2></div>
+      <div class="cs-gallery" style="margin-top:24px">
+        ${fig(im[3], "4/3", "Screen")}
+        ${fig(im[4], "4/3", "Screen")}
+        ${fig(im[5], "4/3", "Screen")}
+        ${fig(im[6], "4/3", "Screen")}
       </div>
-    </section>
+    </div></section>
 
-    <section class="cs-next">
-      <div class="cs-wrap">
-        <div class="row">
-          <a class="cs-allwork" href="/portfolio">${ARROW_LEFT} Back to all work</a>
-          <a class="cs-nextlink" href="/work/${next.slug}">
-            <span class="lbl">Next project</span>
-            <span class="nm">${next.title} →</span>
-          </a>
-        </div>
-      </div>
-    </section>
+    <section class="cs-section"><div class="cs-wrap"><div class="cs-col">
+      <p class="cs-label">Outcome</p>
+      <h2 class="cs-h2">The result</h2>
+      <p class="cs-p">${outcome}</p>
+      <p class="cs-note">↳ Replace with the real results for ${p.title} — launch, adoption, metrics, or client feedback.</p>
+    </div></div></section>
+
+    <section class="cs-media"><div class="cs-wrap">
+      ${fig(im[7], "16/9", "Closing image · wide (16:9)")}
+    </div></section>
+
+    <section class="cs-next"><div class="cs-wrap"><div class="row">
+      <a class="cs-allwork" href="/portfolio">${ARROW_LEFT} Back to all work</a>
+      <a class="cs-nextlink" href="/work/${next.slug}">
+        <span class="cs-preview"><img src="${nextCover}" alt="${next.title}" loading="lazy" /></span>
+        <span class="lbl">Next project</span>
+        <span class="nm">${next.title} →</span>
+      </a>
+    </div></div></section>
   </main>`;
 }
 
