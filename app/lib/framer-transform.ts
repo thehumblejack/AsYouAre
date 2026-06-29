@@ -1,4 +1,5 @@
 import { load } from "cheerio";
+import { logoMarqueeInner } from "../../projects.data.mjs";
 
 /**
  * Post-processing applied to every Framer-exported page before it is served.
@@ -169,7 +170,138 @@ export function transformFramerHtml(html: string): string {
   $("body").append(rebrandScript());
   $("body").append(navInjectScript());
   $("body").append(NAV_HOVER_STYLE);
+  $("body").append(logoMarqueeScript());
+  $("body").append(logoPreviewScript());
   return $.html();
+}
+
+/**
+ * Replaces the Framer placeholder "logo ticker" on the HOME page with a scrolling
+ * marquee of real client/project logos (from public/assets/logo). The ticker is a
+ * direct child of <main>, so we hide it and insert our marquee right after it; an
+ * observer re-inserts it if Framer re-renders. Home-only (the /portfolio page
+ * builds its own marquee via build-portfolio.mjs).
+ */
+function logoMarqueeScript(): string {
+  const marquee = logoMarqueeInner();
+  return `
+<script>
+(function () {
+  var p = location.pathname;
+  if (p !== "/" && p !== "" && p !== "/index" && p !== "/index.html") return;
+  var st = document.createElement("style");
+  st.textContent = '[data-framer-name="logo ticker"]{display:none!important}'
+    + '#ayp-home-logos{width:100%;padding:18px 0 38px;overflow:hidden;box-sizing:border-box;}'
+    + '#ayp-home-logos .mask{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}'
+    + '#ayp-home-logos .track{display:flex;align-items:center;width:max-content;animation:ayph-marquee 42s linear infinite;}'
+    + '#ayp-home-logos:hover .track{animation-play-state:paused;}'
+    + '#ayp-home-logos .logo-item{display:inline-flex;align-items:center;flex:none;margin:0 36px;cursor:pointer;}'
+    + '#ayp-home-logos .track img{height:30px;width:auto;max-width:150px;object-fit:contain;opacity:.58;filter:grayscale(1);transition:filter .25s ease,opacity .25s ease;}'
+    + '#ayp-home-logos .logo-item:hover img{filter:none;opacity:1;}'
+    + '@keyframes ayph-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}'
+    + '@media (max-width:640px){#ayp-home-logos .logo-item{margin:0 26px;}#ayp-home-logos .track img{height:24px;}}';
+  document.head.appendChild(st);
+  var MARQUEE = ${JSON.stringify(marquee)};
+  var queued = false;
+  function ensure() {
+    if (document.getElementById("ayp-home-logos")) return;
+    var ticker = document.querySelector('[data-framer-name="logo ticker"]');
+    if (!ticker || !ticker.parentNode) return;
+    var sec = document.createElement("section");
+    sec.id = "ayp-home-logos";
+    sec.className = "ayp-marq";
+    sec.innerHTML = MARQUEE;
+    ticker.parentNode.insertBefore(sec, ticker.nextSibling);
+  }
+  function schedule(){ if(queued) return; queued=true; requestAnimationFrame(function(){ queued=false; ensure(); }); }
+  ensure();
+  [200, 600, 1200, 2200, 3500, 5500, 8000].forEach(function (t) { setTimeout(ensure, t); });
+  if (document.body) new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+})();
+</script>`;
+}
+
+/**
+ * Site-wide hover-preview for the logo marquees (home + /portfolio). Hovering a
+ * logo (any [data-ayp-logo]) shows a fixed popover with the project's cover and a
+ * "Check project" button → /work/<slug>; logos without a case study show a
+ * disabled "Coming soon" button. The popover is body-level so it's never clipped
+ * by the marquee's overflow:hidden.
+ */
+function logoPreviewScript(): string {
+  return `
+<script>
+(function () {
+  var HIDE_DELAY = 140, pop, coverImg, nameEl, btn, hideT, curr;
+  function build() {
+    if (document.getElementById("ayp-logo-pop")) return;
+    var st = document.createElement("style");
+    st.textContent =
+      '#ayp-logo-pop{position:fixed;z-index:2147483646;width:280px;border-radius:14px;overflow:hidden;background:#fff;'
+      + 'box-shadow:0 24px 60px rgba(20,30,60,.30);opacity:0;transform:translateY(8px) scale(.97);transform-origin:bottom center;'
+      + 'pointer-events:none;transition:opacity .18s ease,transform .18s ease;font-family:"Plus Jakarta Sans","Plus Jakarta Sans Placeholder",sans-serif;}'
+      + '#ayp-logo-pop.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}'
+      + '#ayp-logo-pop .lp-cover{aspect-ratio:16/10;background:#0b0b10;display:flex;align-items:center;justify-content:center;}'
+      + '#ayp-logo-pop .lp-cover img{width:100%;height:100%;object-fit:cover;display:block;}'
+      + '#ayp-logo-pop.soon .lp-cover{background:#f1f2f4;}'
+      + '#ayp-logo-pop.soon .lp-cover img{width:auto;height:auto;max-width:56%;max-height:46%;object-fit:contain;filter:grayscale(1);opacity:.7;}'
+      + '#ayp-logo-pop .lp-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;}'
+      + '#ayp-logo-pop .lp-name{font-size:15px;font-weight:600;letter-spacing:-.01em;color:#131313;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}'
+      + '#ayp-logo-pop .lp-btn{font-size:13px;font-weight:600;letter-spacing:-.01em;padding:9px 15px;border-radius:48px;text-decoration:none;white-space:nowrap;flex:none;}'
+      + '#ayp-logo-pop .lp-btn.go{background:#131313;color:#fff;}'
+      + '#ayp-logo-pop .lp-btn.soon{background:rgba(19,19,19,.06);color:rgba(19,19,19,.4);cursor:not-allowed;}';
+    document.head.appendChild(st);
+    pop = document.createElement("div");
+    pop.id = "ayp-logo-pop";
+    pop.innerHTML = '<div class="lp-cover"><img alt=""></div><div class="lp-foot"><span class="lp-name"></span><a class="lp-btn"></a></div>';
+    document.body.appendChild(pop);
+    coverImg = pop.querySelector(".lp-cover img");
+    nameEl = pop.querySelector(".lp-name");
+    btn = pop.querySelector(".lp-btn");
+    pop.addEventListener("mouseenter", function(){ clearTimeout(hideT); });
+    pop.addEventListener("mouseleave", hide);
+  }
+  function position(el) {
+    var r = el.getBoundingClientRect();
+    var w = pop.offsetWidth || 280, h = pop.offsetHeight || 220;
+    var left = Math.round(r.left + r.width / 2 - w / 2);
+    left = Math.max(12, Math.min(left, window.innerWidth - w - 12));
+    var top = Math.round(r.top - h - 12);
+    if (top < 12) top = Math.round(r.bottom + 12);
+    pop.style.left = left + "px";
+    pop.style.top = top + "px";
+  }
+  function show(el) {
+    if (!pop) build();
+    clearTimeout(hideT);
+    curr = el;
+    var soon = el.hasAttribute("data-soon");
+    pop.classList.toggle("soon", soon);
+    coverImg.src = soon ? (el.getAttribute("data-logo") || "") : (el.getAttribute("data-cover") || "");
+    nameEl.textContent = el.getAttribute("data-name") || "";
+    if (soon) {
+      btn.className = "lp-btn soon"; btn.textContent = "Coming soon"; btn.removeAttribute("href"); btn.title = "Case study coming soon";
+    } else {
+      btn.className = "lp-btn go"; btn.textContent = "Check project →"; btn.setAttribute("href", "/work/" + el.getAttribute("data-slug")); btn.removeAttribute("title");
+    }
+    position(el);
+    requestAnimationFrame(function(){ pop.classList.add("open"); });
+  }
+  function hide() { hideT = setTimeout(function(){ if (pop) pop.classList.remove("open"); curr = null; }, HIDE_DELAY); }
+  document.addEventListener("mouseover", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-ayp-logo]") : null;
+    if (el) { show(el); }
+  });
+  document.addEventListener("mouseout", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-ayp-logo]") : null;
+    if (!el) return;
+    var to = e.relatedTarget;
+    if (to && to.closest && (to.closest("[data-ayp-logo]") || to.closest("#ayp-logo-pop"))) return;
+    hide();
+  });
+  window.addEventListener("scroll", function(){ if (pop && pop.classList.contains("open") && curr) position(curr); }, true);
+})();
+</script>`;
 }
 
 /**

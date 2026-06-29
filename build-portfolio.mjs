@@ -5,7 +5,7 @@
 // injected CSS, which survives the runtime's re-render.
 import { load } from "cheerio";
 import { readFileSync, writeFileSync } from "node:fs";
-import { PROJECTS, coverUrl } from "./projects.data.mjs";
+import { PROJECTS, coverUrl, logoMarqueeInner } from "./projects.data.mjs";
 
 const $ = load(readFileSync("content/about-us.html", "utf8"));
 
@@ -23,7 +23,8 @@ const HIDE = ["about", "team", "journey"];
 const hideCss = HIDE.map((n) => `main > [data-framer-name="${n}"]`).join(",\n  ");
 $("head").append(`<style id="ayp2-only-hero">
   ${hideCss},
-  .framer-b18no3-container { display: none !important; }
+  .framer-b18no3-container,
+  [data-framer-name="logo ticker"] { display: none !important; }
 </style>`);
 
 // This page is a byte-for-byte duplicate of about-us, so Framer's SPA router
@@ -117,13 +118,40 @@ $("head").append(`<style id="ayp-grid-style">
   #ayp-projects .sub { font-family:${PJS}; font-size:15px; line-height:1.35; font-weight:400; color:rgba(19,19,19,.55); margin-top:3px; }
   @media (max-width:980px){ #ayp-projects{padding:80px 32px;} #ayp-projects .ayp-grid{grid-template-columns:repeat(2,1fr);} #ayp-projects .ayp-h2{font-size:38px; line-height:46px;} }
   @media (max-width:640px){ #ayp-projects{padding:64px 22px;} #ayp-projects .ayp-grid{grid-template-columns:1fr;} #ayp-projects .ayp-h2{font-size:32px; line-height:38px;} }
+
+  /* Logo marquee (replaces the Framer placeholder logo ticker) */
+  #ayp-logos { background:#fff; width:100%; align-self:stretch; padding:10px 0 58px; overflow:hidden; box-sizing:border-box; }
+  #ayp-logos .mask { overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); }
+  #ayp-logos .track { display:flex; align-items:center; width:max-content; animation:ayp-marquee 42s linear infinite; }
+  #ayp-logos:hover .track { animation-play-state:paused; }
+  #ayp-logos .logo-item { display:inline-flex; align-items:center; flex:none; margin:0 36px; cursor:pointer; }
+  #ayp-logos .track img { height:30px; width:auto; max-width:150px; object-fit:contain; opacity:.58; filter:grayscale(1); transition:filter .25s ease, opacity .25s ease; -webkit-user-drag:none; user-select:none; }
+  #ayp-logos .logo-item:hover img { filter:none; opacity:1; }
+  @keyframes ayp-marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @media (max-width:640px){ #ayp-logos .logo-item { margin:0 26px; } #ayp-logos .track img { height:24px; } #ayp-logos { padding-bottom:44px; } }
 </style>`);
+
+// Marquee markup (shared with the home page) — each logo carries data-* for the
+// hover preview; the popover interaction is injected site-wide by the transform.
+const LOGOS_HTML = logoMarqueeInner();
 
 // Inject the grid into <main> (so it sits between the hero and the footer) and
 // reword the hero. Both are re-applied on Framer's re-render via an observer.
 $("body").append(`<script>
 (function () {
   var GRID_HTML = ${JSON.stringify(gridInnerHtml)};
+  var LOGOS_HTML = ${JSON.stringify(LOGOS_HTML)};
+  // Logo marquee — inserted right below the hero (before the projects grid).
+  function ensureLogos() {
+    if (document.getElementById("ayp-logos")) return;
+    var main = document.querySelector("main");
+    if (!main) return;
+    var sec = document.createElement("section");
+    sec.id = "ayp-logos";
+    sec.className = "ayp-marq";
+    sec.innerHTML = LOGOS_HTML;
+    main.appendChild(sec);
+  }
   function ensureGrid() {
     if (document.getElementById("ayp-projects")) return;
     var main = document.querySelector("main");
@@ -156,7 +184,7 @@ $("body").append(`<script>
     }
   }
   var queued = false;
-  function run() { ensureGrid(); fixHeading(); fixTrusted(); }
+  function run() { ensureLogos(); ensureGrid(); fixHeading(); fixTrusted(); }
   function schedule() { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; run(); }); }
   run();
   [200, 600, 1200, 2200].forEach(function (t) { setTimeout(run, t); });

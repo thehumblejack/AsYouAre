@@ -33,3 +33,36 @@ export const PROJECTS = [
   { slug: "terra",         title: "Terra",         sub: "Health API for wearables & sensor data (YC W21)", tag: "Product Design · API",      grad: "radial-gradient(120% 100% at 28% 16%, #14352a, #0a0f0c 60%)", media: { type: "vid", id: "gb3o5awpk3e3bd0m1r2s" } },
   { slug: "simular",       title: "Simular",       sub: "Let your computer work for you",                 tag: "Product Design · AI",        grad: "radial-gradient(120% 100% at 28% 16%, #312352, #0c0a16 60%)", media: { type: "vid", id: "htksq8jytpcajj9d9jpw" } },
 ];
+
+// --- Logo marquee (home + /portfolio) ------------------------------------
+// Each logo maps to a project case study via `slug` (→ /work/<slug>). A null
+// slug means "no case study yet" → the preview's button shows "Coming soon".
+export const MARQUEE_LOGOS = [
+  { file: "myedspace-logo.svg",   name: "MyEdSpace",     slug: "myedspace" },
+  { file: "tableflow-logo.svg",   name: "TableFlow",     slug: "tableflow" },
+  { file: "kaedim.png",           name: "Kaedim",        slug: "kaedim" },
+  { file: "fanbasislogo.png",     name: "Fanbasis",      slug: "fanbasis" },
+  { file: "figjoy logo.svg",      name: "Figjoy",        slug: "figjoy" },
+  { file: "tryterra.png",         name: "Terra",         slug: "terra" },
+  { file: "python-official.svg",  name: "PyCon US 2025", slug: "pycon-us-2025" },
+  { file: "signadot-logo-dark.svg", name: "Signadot",    slug: null },
+  { file: "blikslogo.svg",        name: "Bliks",         slug: null },
+  { file: "logo-Letterai.svg",    name: "Letter AI",     slug: null },
+  { file: "Coca-Cola_logo.svg",   name: "Coca-Cola",     slug: null },
+];
+
+// Inner HTML for a marquee (mask + track). Logos duplicated so the CSS
+// translateX(-50%) loops seamlessly. Each item carries data-* for the popover.
+export function logoMarqueeInner() {
+  const item = (L) => {
+    const src = "/assets/logo/" + encodeURIComponent(L.file);
+    const proj = L.slug ? PROJECTS.find((p) => p.slug === L.slug) : null;
+    const cover = proj ? coverUrl(proj.media, 700) : "";
+    const data =
+      `data-ayp-logo data-name="${L.name}" data-logo="${src}"` +
+      (L.slug ? ` data-slug="${L.slug}" data-cover="${cover}"` : ` data-soon="1"`);
+    return `<span class="logo-item" ${data}><img src="${src}" alt="${L.name}" /></span>`;
+  };
+  const items = MARQUEE_LOGOS.map(item).join("");
+  return `<div class="mask"><div class="track">${items}${items}</div></div>`;
+}
